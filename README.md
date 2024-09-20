@@ -1,2 +1,3 @@
 # smart-meter-system-back-end
-The back-end for a Smart Meter Client-Server Application created for the 2024-25 Designing and Developing Enterprise Systems module at Sheffield Hallam University.
+[![Java CI with Maven](https://github.com/jamieclipse/smart-meter-system-back-end/actions/workflows/maven.yml/badge.svg?branch=main)](https://github.com/jamieclipse/smart-meter-system-back-end/actions/workflows/maven.yml)
+
