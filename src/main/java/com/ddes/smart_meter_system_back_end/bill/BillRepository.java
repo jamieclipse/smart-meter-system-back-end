@@ -1,4 +1,4 @@
-package com.ddes.smart_meter_system_back_end;
+package com.ddes.smart_meter_system_back_end.bill;
 
 import org.springframework.data.repository.CrudRepository;
 

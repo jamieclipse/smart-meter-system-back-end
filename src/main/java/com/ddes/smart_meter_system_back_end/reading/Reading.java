@@ -1,11 +1,6 @@
-package com.ddes.smart_meter_system_back_end;
+package com.ddes.smart_meter_system_back_end.reading;
 
-import jakarta.persistence.*;
-
-@Entity
 public class Reading {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String meterId;
     private String readingTimestamp;
