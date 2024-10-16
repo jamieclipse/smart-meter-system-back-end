@@ -1,15 +1,26 @@
 package com.ddes.smart_meter_system_back_end.bill;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 public class Bill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
     private Long id;
+    @Getter
+    @Setter
     private String meterId;
+    @Getter
+    @Setter
     private String billTimestamp;
+    @Getter
+    @Setter
     private double billAmount;
+    @Getter
+    @Setter
+    private double dayRate;
 
     public Bill() {
     }
@@ -19,33 +30,5 @@ public class Bill {
         this.billTimestamp = billTimestamp;
         this.billAmount = billAmount;
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getMeterId() {
-        return meterId;
-    }
-
-    public void setMeterId(String meterId) {
-        this.meterId = meterId;
-    }
-
-    public String getBillTimestamp() {
-        return billTimestamp;
-    }
-
-    public void setBillTimestamp(String billTimestamp) {
-        this.billTimestamp = billTimestamp;
-    }
-
-    public double getBillAmount() {
-        return billAmount;
-    }
-
-    public void setBillAmount(double billAmount) {
-        this.billAmount = billAmount;
-    }
-
+    
 }
