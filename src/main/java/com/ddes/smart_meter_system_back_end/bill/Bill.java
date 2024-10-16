@@ -1,6 +1,11 @@
 package com.ddes.smart_meter_system_back_end.bill;
 
+import jakarta.persistence.*;
+
+@Entity
 public class Bill {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String meterId;
     private String billTimestamp;
