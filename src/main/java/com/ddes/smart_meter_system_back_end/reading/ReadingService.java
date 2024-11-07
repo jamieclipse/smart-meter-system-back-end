@@ -1,7 +1,8 @@
 package com.ddes.smart_meter_system_back_end.reading;
 
 public class ReadingService {
-    
+    //design of app assumes that for every received reading, an object of class Reading will be created.
+    //Use this to feed into methods below
     int electricityReading;
 
     public ReadingService(){

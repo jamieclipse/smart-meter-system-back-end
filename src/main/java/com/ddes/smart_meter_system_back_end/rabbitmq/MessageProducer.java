@@ -10,5 +10,6 @@ public class MessageProducer {
 
     public void sendMessage(String message){
         rabbitTemplate.convertAndSend("exchange", "routingKey", message);
+        //send calculated bill cost to front end
     }
 }

@@ -14,6 +14,6 @@ public class BillService {
         //reading should be passed in from rabbitMQ
         reader.calculateReadingDifference(0); 
         double bill = electricityUsed * 2;
-        return 2.2;
+        return bill;
     }
 }
