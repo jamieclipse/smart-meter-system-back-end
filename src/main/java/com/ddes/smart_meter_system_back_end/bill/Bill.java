@@ -22,9 +22,6 @@ public class Bill {
     @Setter
     private double dayRate;
 
-    public Bill() {
-    }
-
     public Bill(String meterId, String billTimestamp, double billAmount) {
         this.meterId = meterId;
         this.billTimestamp = billTimestamp;

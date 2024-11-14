@@ -20,9 +20,6 @@ public class Reading {
     @Setter
     private double value;
 
-    public Reading() {
-    }
-
     public Reading(String meterId, LocalDateTime timestamp, double value) {
         this.meterId = meterId;
         this.timestamp = timestamp;
