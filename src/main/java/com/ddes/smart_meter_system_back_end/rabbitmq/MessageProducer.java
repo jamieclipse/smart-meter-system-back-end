@@ -8,8 +8,7 @@ public class MessageProducer {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    public void sendMessage(String message){
-        rabbitTemplate.convertAndSend("exchange", "routingKey", message);
-        //send calculated bill cost to front end
+    public void sendMessage(String meterId, double billAmount){
+        rabbitTemplate.convertAndSend("server.outbound", "Meter ID: " + meterId + " Bill Amount: " + billAmount);
     }
 }
