@@ -6,7 +6,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class MessageProducer {
-    Logger log = Logger.getLogger(MessageConsumer.class.getName());
+    Logger log = Logger.getLogger(MessageProducer.class.getName());
 
     @Autowired
     private RabbitTemplate rabbitTemplate;

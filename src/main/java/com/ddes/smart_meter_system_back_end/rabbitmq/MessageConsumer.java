@@ -23,13 +23,19 @@ public class MessageConsumer {
 
 	private void processMessage(Message message) {
 		Map<String,Object> headers = message.getMessageProperties().getHeaders();
+
 		String meterId = (String) headers.get("meterId");
 		log.info("Successfully extracted Meter ID: " + meterId);
+
 		double value = Double.parseDouble(new String(message.getBody()));
+		log.info("Successfully extracted reading value: " + value);
+
 		Reading reading = new Reading(meterId, value);
+		log.info("Successfully created reading object with ID: " + reading.getId());
 
 		BillService billService = new BillService();
 		double billAmount = billService.calculateBill(reading);
+		log.info("Successfully calculated bill amount: " + billAmount);
 
 		MessageProducer messageProducer = new MessageProducer();
 		messageProducer.sendMessage(meterId, billAmount);
