@@ -21,7 +21,7 @@ public class MessageConsumer {
 		processMessage(message);
 	}
 
-	public void processMessage(Message message) {
+	private void processMessage(Message message) {
 		Map<String,Object> headers = message.getMessageProperties().getHeaders();
 		String meterId = (String) headers.get("meterId");
 		double value = Double.parseDouble(message.getBody().toString());
