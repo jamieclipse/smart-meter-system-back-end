@@ -5,12 +5,16 @@ public class ReadingService {
     public ReadingService(){
     }
 
-    public int calculateReadingDifference(String meterId, double value){
-        //get the initial reading from the database
-        //calculate the difference between the current reading and the initial reading
-        //return the difference
-        return 0;
+    public double calculateReadingDifference(String meterId, double newReading){
+        double initialReading = getInitialReading(meterId);
+        double difference = newReading - initialReading;
+        return difference;
 
+    }
+
+    private double getInitialReading(String meterId){
+        //TODO: get the initial reading from the database
+        return 1000;
     }
 
 }

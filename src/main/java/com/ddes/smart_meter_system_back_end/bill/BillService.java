@@ -7,18 +7,14 @@ public class BillService {
     public BillService() {
 
     }
-//pass in reading
-//calculate the difference between the current reading and the initial reading
-//calculate the bill based on the difference
 
     public double calculateBill(Reading reading) {
-        //instantiate new reader
         ReadingService rs = new ReadingService(); 
 
-        //reading should be passed in from rabbitMQ
         double difference = rs.calculateReadingDifference(reading.getMeterId(), reading.getValue());
-        double bill = difference; // TODO: calculate bill based on difference
+        double tariff = 0.21; //TODO: get the tariff from somewhere else
+        double standingCharge = 0.60; //TODO: get the standing charge from somewhere else
+        double bill = (difference * tariff) + standingCharge;
         return bill;
-
     }
 }
