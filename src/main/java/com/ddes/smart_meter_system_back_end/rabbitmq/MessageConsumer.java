@@ -24,7 +24,9 @@ public class MessageConsumer {
 	private void processMessage(Message message) {
 		Map<String,Object> headers = message.getMessageProperties().getHeaders();
 		String meterId = (String) headers.get("meterId");
-		double value = Double.parseDouble(message.getBody().toString());
+		log.info("Successfully extracted Meter ID: " + meterId);
+		// double value = Double.parseDouble(message.getBody().toString()); //Broken
+		double value = 20; //Temp workaround
 		Reading reading = new Reading(meterId, value);
 
 		BillService billService = new BillService();
