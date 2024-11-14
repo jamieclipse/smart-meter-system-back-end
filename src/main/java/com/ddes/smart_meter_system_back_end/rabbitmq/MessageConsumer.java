@@ -17,7 +17,7 @@ public class MessageConsumer {
     @RabbitListener(queues = "server.inbound")
     public void receiveMessage(Message message) {
         log.info("Message received with following properties: " + message.getMessageProperties().toString());
-        log.info("Message received with following payload: " + message.getBody().toString());
+        log.info("Message received with following payload: " +  new String(message.getBody()));
 		processMessage(message);
 	}
 
@@ -25,8 +25,7 @@ public class MessageConsumer {
 		Map<String,Object> headers = message.getMessageProperties().getHeaders();
 		String meterId = (String) headers.get("meterId");
 		log.info("Successfully extracted Meter ID: " + meterId);
-		// double value = Double.parseDouble(message.getBody().toString()); //Broken
-		double value = 20; //Temp workaround
+		double value = Double.parseDouble(new String(message.getBody()));
 		Reading reading = new Reading(meterId, value);
 
 		BillService billService = new BillService();
