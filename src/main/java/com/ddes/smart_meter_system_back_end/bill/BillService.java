@@ -13,10 +13,11 @@ public class BillService {
 
     public double calculateBill(Reading reading) {
         //instantiate new reader
-        ReadingService reader = new ReadingService(); 
+        ReadingService rs = new ReadingService(); 
 
         //reading should be passed in from rabbitMQ
-        double bill = reader.calculateReadingDifference(reading.getMeterId(), reading.getValue());
+        double difference = rs.calculateReadingDifference(reading.getMeterId(), reading.getValue());
+        double bill = difference; // TODO: calculate bill based on difference
         return bill;
 
     }
