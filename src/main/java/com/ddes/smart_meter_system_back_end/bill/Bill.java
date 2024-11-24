@@ -11,7 +11,7 @@ public class Bill {
     private Long id;
     @Getter
     @Setter
-    private String meterId;
+    private String clientId;
     @Getter
     @Setter
     private String billTimestamp;
@@ -22,8 +22,8 @@ public class Bill {
     @Setter
     private double dayRate;
 
-    public Bill(String meterId, String billTimestamp, double billAmount) {
-        this.meterId = meterId;
+    public Bill(String clientId, String billTimestamp, double billAmount) {
+        this.clientId = clientId;
         this.billTimestamp = billTimestamp;
         this.billAmount = billAmount;
     }

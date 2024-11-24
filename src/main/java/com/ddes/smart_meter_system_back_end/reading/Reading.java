@@ -10,14 +10,12 @@ public class Reading {
     @Getter
     private Long id;
     @Getter
-    @Setter
-    private String meterId;
+    private String clientId;
     @Getter
-    @Setter
     private double value;
 
-    public Reading(String meterId, double value) {
-        this.meterId = meterId;
+    public Reading(String clientId, double value) {
+        this.clientId = clientId;
         this.value = value;
     }
     

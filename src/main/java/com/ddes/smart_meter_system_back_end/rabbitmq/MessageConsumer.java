@@ -14,7 +14,7 @@ import com.ddes.smart_meter_system_back_end.reading.Reading;
 public class MessageConsumer {
     Logger log = Logger.getLogger(MessageConsumer.class.getName());
 
-    @RabbitListener(queues = "server.inbound")
+    @RabbitListener(queues = "server.readings")
     public void receiveMessage(Message message) {
         log.info("Message received with following properties: " + message.getMessageProperties().toString());
         log.info("Message received with following payload: " +  new String(message.getBody()));
@@ -24,13 +24,13 @@ public class MessageConsumer {
 	private void processMessage(Message message) {
 		Map<String,Object> headers = message.getMessageProperties().getHeaders();
 
-		String meterId = (String) headers.get("meterId");
-		log.info("Successfully extracted Meter ID: " + meterId);
+		String clientId = (String) headers.get("clientId");
+		log.info("Successfully extracted Meter ID: " + clientId);
 
 		double value = Double.parseDouble(new String(message.getBody()));
 		log.info("Successfully extracted reading value: " + value);
 
-		Reading reading = new Reading(meterId, value);
+		Reading reading = new Reading(clientId, value);
 		log.info("Successfully created reading object with ID: " + reading.getId());
 
 		BillService billService = new BillService();
@@ -38,6 +38,6 @@ public class MessageConsumer {
 		log.info("Successfully calculated bill amount: " + billAmount);
 
 		MessageProducer messageProducer = new MessageProducer();
-		messageProducer.sendMessage(meterId, billAmount);
+		messageProducer.sendMessage(clientId, billAmount);
 	}
 }

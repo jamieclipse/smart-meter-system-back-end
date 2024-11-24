@@ -28,7 +28,7 @@ public class BillService {
     public double calculateBill(Reading reading) {
         ReadingService readingService = new ReadingService(); 
 
-        double difference = readingService.calculateReadingDifference(reading.getMeterId(), reading.getValue());
+        double difference = readingService.calculateReadingDifference(reading.getClientId(), reading.getValue());
         log.info("Successfully calculated difference between current and initial reading: " + difference);
         double bill = ((difference * tariff) + standingCharge) * vat;
         return bill;
