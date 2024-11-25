@@ -5,7 +5,6 @@ import java.util.logging.Logger;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -15,12 +14,6 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan
 public class RabbitMQConfig {
     Logger log = Logger.getLogger(RabbitMQConfig.class.getName());
-
-    @Bean
-    RabbitAdmin rabbitAdmin(ConnectionFactory connectionFactory) {
-        log.info("RabbitAdmin created.");
-        return new RabbitAdmin(connectionFactory);
-    }
 
     @Bean
     RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {

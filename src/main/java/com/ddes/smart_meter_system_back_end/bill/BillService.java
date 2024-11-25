@@ -1,36 +1,39 @@
 package com.ddes.smart_meter_system_back_end.bill;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.ddes.smart_meter_system_back_end.reading.Reading;
 import com.ddes.smart_meter_system_back_end.reading.ReadingService;
 
 import java.util.logging.Logger;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
-@Component
+@Service
 @PropertySource("classpath:config.properties")
 public class BillService {
     Logger log = Logger.getLogger(BillService.class.getName());
 
+    @Autowired
+    private ReadingService readingService;
+    
     @Value("${tariff}")
     private double tariff;
     @Value("${standingCharge}")
     private double standingCharge;
     @Value("${vat}")
     private double vat;
-    
-    public BillService() {
 
-    }
-
-    public double calculateBill(Reading reading) {
-        ReadingService readingService = new ReadingService(); 
-
+    public Bill calculateBill(Reading reading) {
         double difference = readingService.calculateReadingDifference(reading.getClientId(), reading.getValue());
         log.info("Successfully calculated difference between current and initial reading: " + difference);
-        double bill = ((difference * tariff) + standingCharge) * vat;
+        double result = ((difference * tariff) + standingCharge) * vat;
+        Bill bill = new Bill(reading.getClientId(), result);
         return bill;
+    }
+
+    public void storeBill(Bill bill) {
+        // Store the bill in the database
     }
 }

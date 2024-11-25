@@ -5,14 +5,12 @@ import java.util.logging.Logger;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
-import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.SimpleMessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import jakarta.annotation.PostConstruct;
+import com.ddes.smart_meter_system_back_end.bill.Bill;
 
 @Component
 public class MessageProducer {
@@ -22,41 +20,26 @@ public class MessageProducer {
     private RabbitTemplate rabbitTemplate;
 
     @Autowired
-    private RabbitAdmin rabbitAdmin;
-
-    @Autowired
     private DirectExchange directExchange;
 
-    @PostConstruct
-    public void init() { // For debugging purposes only, remove later
-        log.info("RabbitTemplate: " + rabbitTemplate);
-        log.info("RabbitAdmin: " + rabbitAdmin);
-        log.info("DirectExchange: " + directExchange);
-    }
-
-    public void sendMessage(String clientId, double billAmount) {
+    public void sendMessage(Bill bill) {
         try {
-            // Ensure the client queue exists
-            declareClientQueue(clientId);
-
+            // Create the message properties
             MessageProperties messageProperties = new MessageProperties();
-            messageProperties.setHeader("clientId", clientId);
-            Message message = new SimpleMessageConverter().toMessage(billAmount, messageProperties);
+            messageProperties.setHeader("clientId", bill.getClientId());
+            
+            // Create the message
+            Message message = new SimpleMessageConverter().toMessage(Double.toString(bill.getBillAmount()), messageProperties);
 
             // Use the clientId as the routing key
-            rabbitTemplate.send(directExchange.getName(), clientId, message);
-            log.info("Message sent to the exchange with routing key: " + clientId);
+            rabbitTemplate.send(directExchange.getName(), bill.getClientId(), message);
+            log.info("Message sent to the exchange with routing key: " + bill.getClientId());
         } 
         
         catch (Exception e) {
-            log.severe("Error sending message: " + e.getMessage());
+            log.severe("Error sending message: " + e.toString());
         }
         
-    }
-    
-    private void declareClientQueue(String clientId) {
-        Queue queue = new Queue(clientId + ".bills");
-        rabbitAdmin.declareQueue(queue);
     }
     
 }
