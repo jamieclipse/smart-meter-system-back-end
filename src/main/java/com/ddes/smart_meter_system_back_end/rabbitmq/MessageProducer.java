@@ -41,5 +41,14 @@ public class MessageProducer {
         }
         
     }
-    
+        public void sendNotification(String notification) {
+        try {
+            MessageProperties messageProperties = new MessageProperties();
+            Message message = new SimpleMessageConverter().toMessage(notification, messageProperties);
+            rabbitTemplate.send(directExchange.getName(), "notifications", message);
+            log.info("Notification sent to the exchange.");
+        } catch (Exception e) {
+            log.severe("Error sending notification: " + e.toString());
+        }
+    }
 }
