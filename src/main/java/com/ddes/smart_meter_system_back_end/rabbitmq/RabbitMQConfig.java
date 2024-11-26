@@ -32,4 +32,10 @@ public class RabbitMQConfig {
         log.info("Readings queue created.");
         return new Queue("server.readings", true, false, false);
     }
+
+    @Bean
+    Queue notificationQueue() {
+        log.info("Notifications queue created.");
+        return new Queue("server.notifications", true, false, false);
+    }
 }
