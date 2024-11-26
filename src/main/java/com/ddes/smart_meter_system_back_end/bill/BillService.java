@@ -1,19 +1,39 @@
 package com.ddes.smart_meter_system_back_end.bill;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Service;
+
+import com.ddes.smart_meter_system_back_end.reading.Reading;
 import com.ddes.smart_meter_system_back_end.reading.ReadingService;
 
+import java.util.logging.Logger;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+
+@Service
+@PropertySource("classpath:config.properties")
 public class BillService {
+    Logger log = Logger.getLogger(BillService.class.getName());
 
-    public BillService() {
+    @Autowired
+    private ReadingService readingService;
+    
+    @Value("${tariff}")
+    private double tariff;
+    @Value("${standingCharge}")
+    private double standingCharge;
+    @Value("${vat}")
+    private double vat;
 
-    }
-//pass in electricity used from Bill Service
-    public double calculateBill(double electricityUsed) {
-        //instantiate new reader
-        ReadingService reader = new ReadingService(); 
-
-        //reading should be passed in from rabbitMQ
-        reader.calculateReadingDifference(0); 
-        double bill = electricityUsed * 2;
+    public Bill calculateBill(Reading reading) {
+        double difference = readingService.calculateReadingDifference(reading.getClientId(), reading.getValue());
+        log.info("Successfully calculated difference between current and initial reading: " + difference);
+        double result = ((difference * tariff) + standingCharge) * vat;
+        Bill bill = new Bill(reading.getClientId(), result);
         return bill;
+    }
+
+    public void storeBill(Bill bill) {
+        // Store the bill in the database
     }
 }

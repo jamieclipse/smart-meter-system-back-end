@@ -1,24 +1,23 @@
 package com.ddes.smart_meter_system_back_end.reading;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class ReadingService {
-    //design of app assumes that for every received reading, an object of class Reading will be created.
-    //Use this to feed into methods below
-    int electricityReading;
 
-    public ReadingService(){
-        electricityReading = 0;
+    public double calculateReadingDifference(String clientId, double newReading){
+        double initialReading = getInitialReading(clientId);
+        double difference = newReading - initialReading; // New reading should always be greater than initial reading
+        return difference;
+
     }
 
-    public void setInitialReading(int firstReading){
-        this.electricityReading = firstReading;
- 
+    private double getInitialReading(String clientId){
+        return 1000;
     }
 
-    public int calculateReadingDifference(int newReading){
-        //calculate the difference between new reading and old reading
-        int readingDifference = this.electricityReading - newReading;
-        
-        return readingDifference;
+    public void storeReading(Reading reading){
+        // Store the reading in the database
     }
 
 }

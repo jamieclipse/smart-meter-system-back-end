@@ -1,6 +1,5 @@
 package com.ddes.smart_meter_system_back_end.reading;
 
-import java.time.LocalDateTime;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,21 +10,12 @@ public class Reading {
     @Getter
     private Long id;
     @Getter
-    @Setter
-    private String meterId;
+    private String clientId;
     @Getter
-    @Setter
-    private LocalDateTime timestamp;
-    @Getter
-    @Setter
     private double value;
 
-    public Reading() {
-    }
-
-    public Reading(String meterId, LocalDateTime timestamp, double value) {
-        this.meterId = meterId;
-        this.timestamp = timestamp;
+    public Reading(String clientId, double value) {
+        this.clientId = clientId;
         this.value = value;
     }
     

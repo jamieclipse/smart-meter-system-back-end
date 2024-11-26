@@ -10,24 +10,12 @@ public class Bill {
     @Getter
     private Long id;
     @Getter
-    @Setter
-    private String meterId;
+    private String clientId;
     @Getter
-    @Setter
-    private String billTimestamp;
-    @Getter
-    @Setter
     private double billAmount;
-    @Getter
-    @Setter
-    private double dayRate;
 
-    public Bill() {
-    }
-
-    public Bill(String meterId, String billTimestamp, double billAmount) {
-        this.meterId = meterId;
-        this.billTimestamp = billTimestamp;
+    public Bill(String clientId, double billAmount) {
+        this.clientId = clientId;
         this.billAmount = billAmount;
     }
     

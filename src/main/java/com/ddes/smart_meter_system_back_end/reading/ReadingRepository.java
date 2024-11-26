@@ -5,6 +5,6 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ReadingRepository extends JpaRepository<Reading, Long> {
-    List<Reading> findByMeterId(String meterId);
+    List<Reading> findByclientId(String clientId);
     
 }
