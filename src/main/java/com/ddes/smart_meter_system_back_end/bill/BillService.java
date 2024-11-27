@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.ddes.smart_meter_system_back_end.reading.Reading;
 import com.ddes.smart_meter_system_back_end.reading.ReadingService;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,9 @@ public class BillService {
 
     @Autowired
     private ReadingService readingService;
+
+    @Autowired
+    private BillRepository billRepository;
     
     @Value("${tariff}")
     private double tariff;
@@ -26,14 +30,18 @@ public class BillService {
     private double vat;
 
     public Bill calculateBill(Reading reading) {
-        double difference = readingService.calculateReadingDifference(reading.getClientId(), reading.getValue());
+        double difference = readingService.calculateReadingDifference(reading.getClientId(), reading.getAmount());
         log.info("Successfully calculated difference between current and initial reading: " + difference);
         double result = ((difference * tariff) + standingCharge) * vat;
         Bill bill = new Bill(reading.getClientId(), result);
         return bill;
     }
 
-    public void storeBill(Bill bill) {
-        // Store the bill in the database
+    public List<Bill> getAllBills() {
+        return billRepository.findAll();
+    }
+
+    public Bill saveBill(Bill bill) {
+        return billRepository.save(bill);
     }
 }

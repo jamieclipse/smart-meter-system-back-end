@@ -6,17 +6,26 @@ import lombok.*;
 @Entity
 public class Reading {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Getter
     private Long id;
     @Getter
     private String clientId;
     @Getter
-    private Double value;
+    private Double amount;
 
-    public Reading(String clientId, double value) {
+    protected Reading() {}
+    
+    public Reading(String clientId, double amount) {
         this.clientId = clientId;
-        this.value = value;
+        this.amount = amount;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(
+    "Reading[id=%d, clientId='%s', amount='%s']",
+            id, clientId, amount);
     }
     
 }

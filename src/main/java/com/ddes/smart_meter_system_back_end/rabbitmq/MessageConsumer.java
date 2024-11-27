@@ -42,7 +42,7 @@ public class MessageConsumer {
 		log.info("Successfully created reading object with ID: " + reading.getId());
 
 		Bill bill = billService.calculateBill(reading);
-		log.info("Successfully calculated bill amount: " + bill.getValue());
+		log.info("Successfully calculated bill amount: " + bill.getAmount());
 
 		messageProducer.sendMessage(bill);
 	}
