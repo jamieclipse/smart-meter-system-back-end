@@ -12,7 +12,7 @@ public class Reading {
     @Getter
     private String clientId;
     @Getter
-    private double value;
+    private Double value;
 
     public Reading(String clientId, double value) {
         this.clientId = clientId;

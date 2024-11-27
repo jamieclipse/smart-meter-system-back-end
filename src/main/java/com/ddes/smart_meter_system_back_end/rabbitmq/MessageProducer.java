@@ -29,7 +29,7 @@ public class MessageProducer {
             messageProperties.setHeader("clientId", bill.getClientId());
             
             // Create the message
-            Message message = new SimpleMessageConverter().toMessage(Double.toString(bill.getBillAmount()), messageProperties);
+            Message message = new SimpleMessageConverter().toMessage(Double.toString(bill.getValue()), messageProperties);
 
             // Use the clientId as the routing key
             rabbitTemplate.send(directExchange.getName(), bill.getClientId(), message);

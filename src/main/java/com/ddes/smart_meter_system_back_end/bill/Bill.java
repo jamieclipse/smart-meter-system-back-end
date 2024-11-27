@@ -12,11 +12,11 @@ public class Bill {
     @Getter
     private String clientId;
     @Getter
-    private double billAmount;
+    private Double value;
 
-    public Bill(String clientId, double billAmount) {
+    public Bill(String clientId, double value) {
         this.clientId = clientId;
-        this.billAmount = billAmount;
+        this.value = value;
     }
     
 }
