@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 @Service
-@PropertySource("classpath:config.properties")
+@PropertySource("classpath:billing.properties")
 public class BillService {
     Logger log = Logger.getLogger(BillService.class.getName());
 
