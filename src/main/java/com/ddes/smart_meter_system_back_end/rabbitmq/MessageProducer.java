@@ -3,6 +3,7 @@ package com.ddes.smart_meter_system_back_end.rabbitmq;
 import java.util.logging.Logger;
 
 import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.FanoutExchange;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -20,7 +21,10 @@ public class MessageProducer {
     private RabbitTemplate rabbitTemplate;
 
     @Autowired
-    private DirectExchange directExchange;
+    private DirectExchange billsExchange;
+
+    @Autowired
+    private FanoutExchange notificationExchange;
 
     public void sendMessage(Bill bill) {
         try {
@@ -32,14 +36,25 @@ public class MessageProducer {
             Message message = new SimpleMessageConverter().toMessage(Double.toString(bill.getAmount()), messageProperties);
 
             // Use the clientId as the routing key
-            rabbitTemplate.send(directExchange.getName(), bill.getClientId(), message);
+            rabbitTemplate.send(billsExchange.getName(), bill.getClientId(), message);
             log.info("Message sent to the exchange with routing key: " + bill.getClientId());
         } 
-        
         catch (Exception e) {
             log.severe("Error sending message: " + e.toString());
         }
         
     }
-    
+        public void sendNotification(String notification) {
+        try {
+            MessageProperties messageProperties = new MessageProperties();
+            
+            Message message = new SimpleMessageConverter().toMessage(notification, messageProperties);
+            
+            rabbitTemplate.send(notificationExchange.getName(), "notifications", message);
+            log.info("Notification sent to the exchange: " + notification);
+        } 
+        catch (Exception e) {
+            log.severe("Error sending notification: " + e.toString());
+        }
+    }
 }
