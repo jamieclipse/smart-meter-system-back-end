@@ -19,7 +19,8 @@ public class ReadingService {
     }
 
     private double getInitialReading(String clientId){
-        return 1000;
+        List<Reading> readings = readingRepository.findByClientId(clientId);
+        return readings.get(0).getAmount();
     }
 
     public List<Reading> getAllReadings() {

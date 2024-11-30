@@ -1,15 +1,14 @@
 package com.ddes.smart_meter_system_back_end.bill;
+
+import java.util.logging.Logger;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import com.ddes.smart_meter_system_back_end.reading.Reading;
 import com.ddes.smart_meter_system_back_end.reading.ReadingService;
-
-import java.util.List;
-import java.util.logging.Logger;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 
 @Service
 @PropertySource("classpath:billing.properties")
@@ -34,11 +33,10 @@ public class BillService {
         log.info("Successfully calculated difference between current and initial reading: " + difference);
         double result = ((difference * tariff) + standingCharge) * vat;
         Bill bill = new Bill(reading.getClientId(), result);
+        log.info("Successfully calculated bill amount: " + bill.getAmount());
+        saveBill(bill);
+        log.info("Successfully saved bill to database.");
         return bill;
-    }
-
-    public List<Bill> getAllBills() {
-        return billRepository.findAll();
     }
 
     public Bill saveBill(Bill bill) {
