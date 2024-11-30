@@ -28,7 +28,7 @@ public class NotificationService {
     @PostConstruct
     public void startNotificationService() {
         log.info("Starting Grid Health Notification Service.");
-        scheduleNextNotification(true);
+        scheduleNextNotification(false);
     }
 
     @PreDestroy
