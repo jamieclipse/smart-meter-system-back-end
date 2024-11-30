@@ -23,6 +23,9 @@ public class ReadingService {
 
     private double getInitialReading(String clientId){
         List<Reading> readings = readingRepository.findByClientId(clientId);
+        if (readings.isEmpty()) { // This should never happen, but a null pointer exception is worse
+            return 0;
+        }
         return readings.get(0).getAmount();
     }
 
