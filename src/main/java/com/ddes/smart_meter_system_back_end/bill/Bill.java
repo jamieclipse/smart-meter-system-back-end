@@ -1,7 +1,10 @@
 package com.ddes.smart_meter_system_back_end.bill;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.Getter;
 
 @Entity
 public class Bill {
