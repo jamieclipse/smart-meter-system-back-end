@@ -61,12 +61,12 @@ public class NotificationService {
         }
     }
 
-    private void sendDownNotification() {
+    void sendDownNotification() {
         messageProducer.sendNotification("grid_down");
         scheduleNextNotification(false); // Ensure next notification is an up notification
     }
 
-    private void sendUpNotification() {
+    void sendUpNotification() {
         messageProducer.sendNotification("grid_up");
         scheduleNextNotification(true); // Ensure next notification is a down notification
     }

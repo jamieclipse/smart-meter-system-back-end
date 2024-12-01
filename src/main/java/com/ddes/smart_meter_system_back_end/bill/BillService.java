@@ -21,12 +21,9 @@ public class BillService {
     @Autowired
     private BillRepository billRepository;
     
-    @Value("${tariff}")
-    private double tariff;
-    @Value("${standingCharge}")
-    private double standingCharge;
-    @Value("${vat}")
-    private double vat;
+    @Value("${tariff}") double tariff;
+    @Value("${standingCharge}") double standingCharge;
+    @Value("${vat}") double vat;
 
     public Bill calculateBill(Reading reading) {
         double difference = readingService.calculateReadingDifference(reading.getClientId(), reading.getAmount());

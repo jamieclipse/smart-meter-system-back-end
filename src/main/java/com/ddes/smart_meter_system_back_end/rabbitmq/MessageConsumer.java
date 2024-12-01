@@ -33,7 +33,7 @@ public class MessageConsumer {
 		processMessage(message);
 	}
 
-	private void processMessage(Message message) {
+	void processMessage(Message message) {
 		Map<String,Object> headers = message.getMessageProperties().getHeaders();
 
 		String clientId = (String) headers.get("clientId");
