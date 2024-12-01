@@ -1,9 +1,11 @@
 package com.ddes.smart_meter_system_back_end.bill;
 
-import org.springframework.data.repository.CrudRepository;
-
 import java.util.List;
 
-public interface BillRepository extends CrudRepository<Bill, Long> {
-    List<Bill> findByclientId(String clientId);
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface BillRepository extends JpaRepository<Bill, Long> {
+    List<Bill> findByClientId(String clientId);
 }

@@ -1,10 +1,12 @@
 package com.ddes.smart_meter_system_back_end.reading;
 
-import org.springframework.data.repository.CrudRepository;
-
 import java.util.List;
 
-public interface ReadingRepository extends CrudRepository<Reading, Long> {
-    List<Reading> findByclientId(String clientId);
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface ReadingRepository extends JpaRepository<Reading, Long> {
+    List<Reading> findByClientId(String clientId);
     
 }
