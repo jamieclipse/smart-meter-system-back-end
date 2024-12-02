@@ -12,6 +12,7 @@ import com.ddes.smart_meter_system_back_end.bill.Bill;
 import com.ddes.smart_meter_system_back_end.bill.BillService;
 import com.ddes.smart_meter_system_back_end.reading.Reading;
 import com.ddes.smart_meter_system_back_end.reading.ReadingService;
+import com.ddes.smart_meter_system_back_end.json.JsonService;
 
 @Component
 public class MessageConsumer {
@@ -39,8 +40,13 @@ public class MessageConsumer {
 		String clientId = (String) headers.get("clientId");
 		log.info("Successfully extracted Client ID: " + clientId);
 
-		double readingValue = Double.parseDouble(new String(message.getBody()));
-		log.info("Successfully extracted reading value: " + readingValue);
+		//convert json reading into reading object using JsonService
+        	Reading reading = JsonService.fromJsonToReading(new String(message.getBody()));
+        	log.info("Successfully extracted reading value: " + reading.getAmount());
+
+		//previous code
+		//double readingValue = Double.parseDouble(new String(message.getBody()));
+		//log.info("Successfully extracted reading value: " + readingValue);
 
 		Reading reading = new Reading(clientId, readingValue);
 		log.info("Successfully created reading object with ID: " + reading.getId());
