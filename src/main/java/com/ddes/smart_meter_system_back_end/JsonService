@@ -1,0 +1,24 @@
+package com.ddes.smart_meter_system_back_end.json;
+
+import com.ddes.smart_meter_system_back_end.bill.Bill;
+import com.ddes.smart_meter_system_back_end.reading.Reading;
+
+public class JsonService {
+
+    //use to create json string for grid notification
+    public static String createJson(String key, Object value) {
+        return "{\"" + key + "\":\"" + value + "\"}";
+    }
+
+    //convert bill to json string which include client id (to divert to correct queue) and bill amount
+    public static String toJson(Bill bill) {
+        return "{\"clientId\":\"" + bill.getClientId() + "\",\"amount\":" + bill.getAmount() + "}";
+    }
+
+    //convert reading json coming through from front end into reading object
+    public static Reading fromJsonToReading(String json) {
+        String clientId = json.substring(json.indexOf("clientId") + 11, json.indexOf("\",\"reading\""));
+        double readingValue = Double.parseDouble(json.substring(json.indexOf("reading") + 9, json.length() - 2));
+        return new Reading(clientId, readingValue);
+    }
+}
