@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ddes.smart_meter_system_back_end.bill.Bill;
+import com.ddes.smart_meter_system_back_end.json.JsonService;
 
 @Component
 public class MessageProducer {
@@ -31,9 +32,12 @@ public class MessageProducer {
             // Create the message properties
             MessageProperties messageProperties = new MessageProperties();
             messageProperties.setHeader("clientId", bill.getClientId());
+
+            //convert the bill to json using JsonService
+            String jsonBill = JsonService.toJson(bill);
             
             // Create the message
-            Message message = new SimpleMessageConverter().toMessage(Double.toString(bill.getAmount()), messageProperties);
+            Message message = new SimpleMessageConverter().toMessage(jsonBill, messageProperties);
 
             // Use the clientId as the routing key
             rabbitTemplate.send(billsExchange.getName(), bill.getClientId(), message);
@@ -47,8 +51,11 @@ public class MessageProducer {
         public void sendNotification(String notification) {
         try {
             MessageProperties messageProperties = new MessageProperties();
+
+            //convert notification to json
+            String jsonNotification = JsonService.createJson("notification: ", notification);
             
-            Message message = new SimpleMessageConverter().toMessage(notification, messageProperties);
+            Message message = new SimpleMessageConverter().toMessage(jsonNotification, messageProperties);
             
             rabbitTemplate.send(notificationExchange.getName(), "notifications", message);
             log.info("Notification sent to the exchange: " + notification);
