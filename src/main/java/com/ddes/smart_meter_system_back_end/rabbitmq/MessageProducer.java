@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import com.ddes.smart_meter_system_back_end.bill.Bill;
 import com.ddes.smart_meter_system_back_end.json.JsonService;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 @Component
 public class MessageProducer {
@@ -34,7 +35,7 @@ public class MessageProducer {
             messageProperties.setHeader("clientId", bill.getClientId());
 
             //convert the bill to json using JsonService
-            String jsonBill = JsonService.toJson(bill);
+            ObjectNode jsonBill = JsonService.createJson("bill", bill.getAmount());
             
             // Create the message
             Message message = new SimpleMessageConverter().toMessage(jsonBill, messageProperties);
@@ -53,7 +54,7 @@ public class MessageProducer {
             MessageProperties messageProperties = new MessageProperties();
 
             //convert notification to json
-            String jsonNotification = JsonService.createJson("notification: ", notification);
+            ObjectNode jsonNotification = JsonService.createJson("notification: ", notification);
             
             Message message = new SimpleMessageConverter().toMessage(jsonNotification, messageProperties);
             

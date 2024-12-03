@@ -41,15 +41,9 @@ public class MessageConsumer {
 		log.info("Successfully extracted Client ID: " + clientId);
 
 		//convert json reading into reading object using JsonService
-        	Reading reading = JsonService.fromJsonToReading(new String(message.getBody()));
-        	log.info("Successfully extracted reading value: " + reading.getAmount());
+        Reading reading = JsonService.fromJsonToReading(clientId, new String(message.getBody()));
 
-		//previous code
-		//double readingValue = Double.parseDouble(new String(message.getBody()));
-		//log.info("Successfully extracted reading value: " + readingValue);
-
-		Reading reading = new Reading(clientId, readingValue);
-		log.info("Successfully created reading object with ID: " + reading.getId());
+		log.info("Successfully created reading object with ID: " + reading.getId() + " and amount: " + reading.getAmount());
 
 		// Store the reading in the database
 		ReadingService.saveReading(reading);
