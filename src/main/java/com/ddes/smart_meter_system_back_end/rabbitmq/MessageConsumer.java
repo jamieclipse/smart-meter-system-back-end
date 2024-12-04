@@ -43,7 +43,7 @@ public class MessageConsumer {
 		log.info("Successfully extracted reading value: " + readingValue);
 
 		Reading reading = new Reading(clientId, readingValue);
-		log.info("Successfully created reading object with ID: " + reading.getId());
+		log.info("Successfully created reading object with ID: " + reading.getClientId());
 
 		// Store the reading in the database
 		ReadingService.saveReading(reading);
